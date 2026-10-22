@@ -1,112 +1,143 @@
-# Chat App
+# 💬 Chat App
 
-Aplicação de chat em tempo real desenvolvida com **Flask** e **Flask-SocketIO**. As mensagens enviadas por um cliente são transmitidas para todos os clientes conectados por meio de WebSockets.
+Aplicação de **chat em tempo real** construída com Flask e Flask-SocketIO. As mensagens enviadas por um usuário são transmitidas instantaneamente para todos os clientes conectados por WebSockets.
 
-## Tecnologias
+![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-Web%20Framework-000000?logo=flask&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-Real--time-010101?logo=socket.io&logoColor=white)
 
-- **Python**
-- **Flask** — criação do servidor web
-- **Flask-SocketIO** — comunicação em tempo real
-- **HTML** — estrutura da interface
-- **CSS** — estilos da aplicação
-- **Socket.IO** — conexão entre o navegador e o servidor
+## ✨ Funcionalidades
 
-## Funcionalidades
+- Comunicação em tempo real com Socket.IO;
+- Mensagens distribuídas para todos os clientes conectados;
+- Interface responsiva e moderna;
+- Indicador visual do estado da conexão;
+- Validação para impedir mensagens vazias;
+- Rolagem automática para a mensagem mais recente;
+- Estrutura simples e fácil de expandir.
 
-- Interface simples para envio de mensagens;
-- Comunicação em tempo real;
-- Distribuição das mensagens para todos os clientes conectados;
-- Layout básico responsivo para a tela de chat.
+## 🖼️ Visão geral
 
-## Estrutura do projeto
+A aplicação possui uma interface de chat com:
+
+- cabeçalho com o status da conexão;
+- área para exibição das mensagens;
+- estado vazio antes da primeira mensagem;
+- campo de texto e botão de envio;
+- suporte a telas menores.
+
+## 🧰 Tecnologias
+
+- **Python** — linguagem principal;
+- **Flask** — servidor web;
+- **Flask-SocketIO** — comunicação bidirecional em tempo real;
+- **HTML5** — estrutura semântica da interface;
+- **CSS3** — layout, responsividade e estilos visuais;
+- **JavaScript** — interação com a interface e eventos Socket.IO.
+
+## 📁 Estrutura do projeto
 
 ```text
 chat-app/
-├── app.py
-├── requirements.txt
+├── app.py                 # Servidor Flask e eventos Socket.IO
+├── requirements.txt       # Dependências do projeto
 ├── static/
-│   └── style.css
-└── templates/
-    └── index.html
+│   └── style.css          # Estilos da interface
+├── templates/
+│   └── index.html         # Página principal do chat
+└── README.md
 ```
 
-## Pré-requisitos
+## 🚀 Instalação
+
+### Pré-requisitos
 
 - Python 3.8 ou superior;
-- `pip` instalado.
+- `pip`;
+- Git.
 
-## Instalação
+### 1. Clone o repositório
 
-1. Clone o repositório:
+```bash
+git clone https://github.com/laeciojn/chat-app.git
+cd chat-app
+```
 
-   ```bash
-   git clone https://github.com/laeciojn/chat-app.git
-   cd chat-app
-   ```
+### 2. Crie um ambiente virtual
 
-2. Crie e ative um ambiente virtual:
+#### Linux/macOS
 
-   **Linux/macOS:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
+#### Windows PowerShell
 
-   **Windows:**
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+```
 
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1
-   ```
+### 3. Instale as dependências
 
-3. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+## ▶️ Como executar
 
-## Como executar
-
-Inicie a aplicação com:
+Inicie o servidor com:
 
 ```bash
 python app.py
 ```
 
-Depois, acesse no navegador:
+Depois, abra no navegador:
 
 ```text
 http://127.0.0.1:5000
 ```
 
-Para testar a comunicação em tempo real, abra a aplicação em duas ou mais abas do navegador e envie mensagens.
+Para testar o chat, abra a aplicação em duas ou mais abas ou janelas do navegador e envie mensagens. Todas as abas conectadas deverão receber as mensagens em tempo real.
 
-## Como funciona
+## 🔌 Fluxo de comunicação
 
-- A rota `/` renderiza a interface definida em `templates/index.html`.
-- O cliente estabelece uma conexão Socket.IO com o servidor.
-- Quando uma mensagem é enviada, o evento `message` é emitido para o servidor.
-- O servidor retransmite a mensagem para todos os clientes conectados.
+1. O navegador acessa a rota `/`.
+2. O Flask renderiza `templates/index.html`.
+3. O cliente JavaScript estabelece uma conexão Socket.IO.
+4. Ao enviar uma mensagem, o cliente emite o evento `message`.
+5. O servidor retransmite a mensagem aos clientes conectados.
+6. Cada cliente atualiza sua lista de mensagens e rola até o conteúdo mais recente.
 
-## Dependências
-
-As dependências do projeto estão definidas em `requirements.txt`:
+O evento utilizado pelo cliente e pelo servidor é:
 
 ```text
-flask
-flask-SocketIO
+message
 ```
 
-## Melhorias futuras
+## 🛠️ Desenvolvimento
 
-- Adicionar identificação dos usuários;
-- Persistir mensagens em um banco de dados;
-- Criar salas de conversa;
-- Adicionar autenticação;
-- Melhorar o layout e a experiência em dispositivos móveis;
-- Configurar execução para produção.
+Ao alterar os arquivos da interface, reinicie o servidor quando necessário e atualize o navegador para visualizar as mudanças.
 
-## Licença
+Antes de abrir uma contribuição, verifique:
+
+- se a aplicação inicia corretamente;
+- se o envio e o recebimento de mensagens continuam funcionando;
+- se a interface permanece utilizável em telas pequenas;
+- se não há mensagens vazias sendo enviadas.
+
+## 🔮 Próximas melhorias
+
+- Identificação dos usuários;
+- Persistência das mensagens em banco de dados;
+- Salas de conversa;
+- Autenticação;
+- Histórico de mensagens;
+- Testes automatizados;
+- Configuração para execução em produção;
+- Containerização com Docker.
+
+## 📄 Licença
 
 Este projeto ainda não possui uma licença definida.
