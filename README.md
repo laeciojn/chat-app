@@ -46,38 +46,6 @@ chat-app/
 └── README.md              # Documentação
 ```
 
-## Primeiros passos
-
-### Requisitos
-
-- Python 3.8 ou superior;
-- pip;
-- Git.
-
-### Instalação
-
-```bash
-git clone https://github.com/laeciojn/chat-app.git
-cd chat-app
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-No Windows PowerShell:
-
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
-
-### Execução
-
-```bash
-python app.py
-```
-
 Acesse `http://127.0.0.1:5000` no navegador. Para validar a comunicação em tempo real, abra a aplicação em duas ou mais abas e envie mensagens entre elas.
 
 ## Como funciona
@@ -98,30 +66,3 @@ message
 ```
 
 Esse contrato deve ser preservado ao adicionar novos recursos para manter a compatibilidade entre o servidor e a interface web.
-
-## Diretrizes de desenvolvimento
-
-Antes de enviar alterações, valide:
-
-- inicialização correta da aplicação;
-- envio e recebimento de mensagens em múltiplas abas;
-- comportamento em telas pequenas;
-- tratamento de mensagens vazias;
-- atualização correta do estado da conexão;
-- ausência de alterações acidentais no contrato `message`.
-
-## Próximas possibilidades
-
-- Identidade e presença dos usuários;
-- Persistência e histórico de mensagens;
-- Salas e conversas privadas;
-- Autenticação e autorização;
-- Notificações e indicador de mensagens não lidas;
-- Testes automatizados;
-- Observabilidade e logs estruturados;
-- Empacotamento com Docker;
-- Configuração para produção.
-
-## Licença
-
-Este projeto ainda não possui uma licença definida.
