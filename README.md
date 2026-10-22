@@ -33,17 +33,7 @@ A implementação mantém o evento `message` como contrato central entre cliente
 | Estilos | CSS3 | Layout responsivo e identidade visual |
 | Cliente | JavaScript | Interação e eventos Socket.IO |
 
-## Estrutura
 
-```text
-chat-app/
-├── app.py                 # Aplicação Flask e eventos Socket.IO
-├── requirements.txt       # Dependências do projeto
-├── static/
-│   └── style.css          # Estilos da interface
-├── templates/
-│   └── index.html         # Cliente web do chat
-└── README.md              # Documentação
 ```
 
 Acesse `http://127.0.0.1:5000` no navegador. Para validar a comunicação em tempo real, abra a aplicação em duas ou mais abas e envie mensagens entre elas.
