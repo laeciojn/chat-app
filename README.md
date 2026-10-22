@@ -1,143 +1,127 @@
-# 💬 Chat App
+# Chat App
 
-Aplicação de **chat em tempo real** construída com Flask e Flask-SocketIO. As mensagens enviadas por um usuário são transmitidas instantaneamente para todos os clientes conectados por WebSockets.
+Uma aplicação de comunicação em tempo real desenvolvida para demonstrar uma experiência de chat simples, rápida e extensível com Flask e Flask-SocketIO.
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-Web%20Framework-000000?logo=flask&logoColor=white)
-![Socket.IO](https://img.shields.io/badge/Socket.IO-Real--time-010101?logo=socket.io&logoColor=white)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-2.x-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-real--time-010101?logo=socket.io&logoColor=white)](https://socket.io/)
 
-## ✨ Funcionalidades
+## Sobre o projeto
 
-- Comunicação em tempo real com Socket.IO;
-- Mensagens distribuídas para todos os clientes conectados;
-- Interface responsiva e moderna;
+O Chat App conecta múltiplos clientes em uma mesma conversa e distribui as mensagens instantaneamente por meio de WebSockets. O projeto combina uma base backend objetiva com uma interface responsiva, acessível e preparada para futuras evoluções.
+
+A implementação mantém o evento `message` como contrato central entre cliente e servidor, deixando a arquitetura simples de entender e fácil de ampliar.
+
+## Destaques
+
+- Comunicação bidirecional em tempo real;
+- Atualização instantânea para todos os clientes conectados;
+- Interface responsiva para desktop e dispositivos móveis;
 - Indicador visual do estado da conexão;
-- Validação para impedir mensagens vazias;
-- Rolagem automática para a mensagem mais recente;
-- Estrutura simples e fácil de expandir.
+- Prevenção de mensagens vazias;
+- Rolagem automática para o conteúdo mais recente;
+- HTML semântico e estados de foco acessíveis;
+- Estrutura enxuta para prototipação e aprendizado.
 
-## 🖼️ Visão geral
+## Stack tecnológica
 
-A aplicação possui uma interface de chat com:
+| Camada | Tecnologia | Responsabilidade |
+| --- | --- | --- |
+| Backend | Python e Flask | Servidor web e roteamento |
+| Real-time | Flask-SocketIO | Eventos e comunicação bidirecional |
+| Interface | HTML5 | Estrutura semântica |
+| Estilos | CSS3 | Layout responsivo e identidade visual |
+| Cliente | JavaScript | Interação e eventos Socket.IO |
 
-- cabeçalho com o status da conexão;
-- área para exibição das mensagens;
-- estado vazio antes da primeira mensagem;
-- campo de texto e botão de envio;
-- suporte a telas menores.
-
-## 🧰 Tecnologias
-
-- **Python** — linguagem principal;
-- **Flask** — servidor web;
-- **Flask-SocketIO** — comunicação bidirecional em tempo real;
-- **HTML5** — estrutura semântica da interface;
-- **CSS3** — layout, responsividade e estilos visuais;
-- **JavaScript** — interação com a interface e eventos Socket.IO.
-
-## 📁 Estrutura do projeto
+## Estrutura
 
 ```text
 chat-app/
-├── app.py                 # Servidor Flask e eventos Socket.IO
+├── app.py                 # Aplicação Flask e eventos Socket.IO
 ├── requirements.txt       # Dependências do projeto
 ├── static/
 │   └── style.css          # Estilos da interface
 ├── templates/
-│   └── index.html         # Página principal do chat
-└── README.md
+│   └── index.html         # Cliente web do chat
+└── README.md              # Documentação
 ```
 
-## 🚀 Instalação
+## Primeiros passos
 
-### Pré-requisitos
+### Requisitos
 
 - Python 3.8 ou superior;
-- `pip`;
+- pip;
 - Git.
 
-### 1. Clone o repositório
+### Instalação
 
 ```bash
 git clone https://github.com/laeciojn/chat-app.git
 cd chat-app
-```
-
-### 2. Crie um ambiente virtual
-
-#### Linux/macOS
-
-```bash
 python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-#### Windows PowerShell
+No Windows PowerShell:
 
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
-```
-
-### 3. Instale as dependências
-
-```bash
 pip install -r requirements.txt
 ```
 
-## ▶️ Como executar
-
-Inicie o servidor com:
+### Execução
 
 ```bash
 python app.py
 ```
 
-Depois, abra no navegador:
+Acesse `http://127.0.0.1:5000` no navegador. Para validar a comunicação em tempo real, abra a aplicação em duas ou mais abas e envie mensagens entre elas.
 
-```text
-http://127.0.0.1:5000
-```
+## Como funciona
 
-Para testar o chat, abra a aplicação em duas ou mais abas ou janelas do navegador e envie mensagens. Todas as abas conectadas deverão receber as mensagens em tempo real.
+1. O Flask disponibiliza a rota principal `/`.
+2. O servidor renderiza `templates/index.html`.
+3. O navegador abre uma conexão Socket.IO.
+4. O formulário emite o evento `message` ao enviar uma mensagem válida.
+5. O servidor retransmite o conteúdo para os clientes conectados.
+6. Cada cliente atualiza a conversa e mantém a mensagem mais recente visível.
 
-## 🔌 Fluxo de comunicação
+## Contrato de eventos
 
-1. O navegador acessa a rota `/`.
-2. O Flask renderiza `templates/index.html`.
-3. O cliente JavaScript estabelece uma conexão Socket.IO.
-4. Ao enviar uma mensagem, o cliente emite o evento `message`.
-5. O servidor retransmite a mensagem aos clientes conectados.
-6. Cada cliente atualiza sua lista de mensagens e rola até o conteúdo mais recente.
-
-O evento utilizado pelo cliente e pelo servidor é:
+O evento utilizado na comunicação entre frontend e backend é:
 
 ```text
 message
 ```
 
-## 🛠️ Desenvolvimento
+Esse contrato deve ser preservado ao adicionar novos recursos para manter a compatibilidade entre o servidor e a interface web.
 
-Ao alterar os arquivos da interface, reinicie o servidor quando necessário e atualize o navegador para visualizar as mudanças.
+## Diretrizes de desenvolvimento
 
-Antes de abrir uma contribuição, verifique:
+Antes de enviar alterações, valide:
 
-- se a aplicação inicia corretamente;
-- se o envio e o recebimento de mensagens continuam funcionando;
-- se a interface permanece utilizável em telas pequenas;
-- se não há mensagens vazias sendo enviadas.
+- inicialização correta da aplicação;
+- envio e recebimento de mensagens em múltiplas abas;
+- comportamento em telas pequenas;
+- tratamento de mensagens vazias;
+- atualização correta do estado da conexão;
+- ausência de alterações acidentais no contrato `message`.
 
-## 🔮 Próximas melhorias
+## Próximas possibilidades
 
-- Identificação dos usuários;
-- Persistência das mensagens em banco de dados;
-- Salas de conversa;
-- Autenticação;
-- Histórico de mensagens;
+- Identidade e presença dos usuários;
+- Persistência e histórico de mensagens;
+- Salas e conversas privadas;
+- Autenticação e autorização;
+- Notificações e indicador de mensagens não lidas;
 - Testes automatizados;
-- Configuração para execução em produção;
-- Containerização com Docker.
+- Observabilidade e logs estruturados;
+- Empacotamento com Docker;
+- Configuração para produção.
 
-## 📄 Licença
+## Licença
 
 Este projeto ainda não possui uma licença definida.
