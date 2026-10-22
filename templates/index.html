@@ -1,34 +1,102 @@
-<html>
 <!DOCTYPE html>
-   <html lang="en">
-   <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Chat em Tempo Real</title>
-       <link rel="stylesheet" href="/static/style.css">
-   </head>
-   <body>
-       <ul id="messages"></ul>
-       <form id="form" action="">
-           <input id="input" autocomplete="off" /><button>Enviar</button>
-       </form>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat em Tempo Real</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main class="page" aria-label="Aplicação de chat">
+        <section class="chat-card" aria-label="Janela de conversa em tempo real">
+            <header class="chat-header">
+                <div>
+                    <h1>Chat em Tempo Real</h1>
+                    <p>Converse com todos os usuários conectados.</p>
+                </div>
+                <p id="status" class="status status--offline" aria-live="polite">Desconectado</p>
+            </header>
 
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
-       <script>
-           var socket = io.connect('http://' + document.domain + ':' + location.port);
+            <section class="chat-messages" aria-label="Mensagens">
+                <p id="empty-state" class="empty-state">Nenhuma mensagem ainda. Envie a primeira mensagem para iniciar a conversa.</p>
+                <ul id="messages" aria-live="polite" aria-label="Lista de mensagens"></ul>
+            </section>
 
-           socket.on('message', function(msg) {
-               var ul = document.getElementById('messages');
-               var li = document.createElement('li');
-               li.appendChild(document.createTextNode(msg));
-               ul.appendChild(li);
-           });
+            <form id="form" class="chat-form" action="" autocomplete="off">
+                <label for="input" class="sr-only">Digite sua mensagem</label>
+                <input id="input" name="message" type="text" placeholder="Digite sua mensagem..." maxlength="500" required>
+                <button id="send-button" type="submit" disabled>Enviar</button>
+            </form>
+        </section>
+    </main>
 
-           document.getElementById('form').onsubmit = function() {
-               socket.emit('message', document.getElementById('input').value);
-               document.getElementById('input').value = '';
-               return false;
-           };
-       </script>
-   </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+        const messages = document.getElementById('messages');
+        const emptyState = document.getElementById('empty-state');
+        const sendButton = document.getElementById('send-button');
+        const status = document.getElementById('status');
+
+        function updateSubmitState() {
+            sendButton.disabled = input.value.trim().length === 0;
+        }
+
+        function updateConnectionStatus(text, connected) {
+            status.textContent = text;
+            status.classList.toggle('status--online', connected);
+            status.classList.toggle('status--offline', !connected);
+        }
+
+        function addMessage(text) {
+            if (!text) {
+                return;
+            }
+
+            emptyState.hidden = true;
+
+            const li = document.createElement('li');
+            li.textContent = text;
+            messages.appendChild(li);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        socket.on('connect', function() {
+            updateConnectionStatus('Conectado', true);
+        });
+
+        socket.on('disconnect', function() {
+            updateConnectionStatus('Desconectado', false);
+        });
+
+        socket.on('connect_error', function() {
+            updateConnectionStatus('Falha na conexão', false);
+        });
+
+        socket.on('message', function(msg) {
+            addMessage(msg);
+        });
+
+        input.addEventListener('input', updateSubmitState);
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const message = input.value.trim();
+            if (!message) {
+                updateSubmitState();
+                return;
+            }
+
+            socket.emit('message', message);
+            input.value = '';
+            updateSubmitState();
+            input.focus();
+        });
+
+        updateSubmitState();
+    </script>
+</body>
 </html>
