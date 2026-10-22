@@ -36,7 +36,6 @@ A implementação mantém o evento `message` como contrato central entre cliente
 
 ```
 
-Acesse `http://127.0.0.1:5000` no navegador. Para validar a comunicação em tempo real, abra a aplicação em duas ou mais abas e envie mensagens entre elas.
 
 ## Como funciona
 
